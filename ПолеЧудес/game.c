@@ -2,38 +2,41 @@
 #include <stdlib.h>
 #include <string.h> 
 
-void game()
+#include "list.h"
+
+void game(const struct List* players, const char* question, const char* answer)
 {
-	FILE* q = fopen("questions", "r");
-	char que[100], ans[100], word[100], s[2];
+	char word[100], s[2];
 	char w;
-	int count, i, n, k = 0, win, a[3];
-	fgets(que, sizeof(que), q); //считывается вопрос
-	fgets(ans, sizeof(ans), q); //считывается ответ
-	count = strlen(ans); //длинна ответа
+	int count, i, n, k = 0;
+	struct Player* winner;
+
+	count = strlen(answer);
 	for (i = 0; i < count; i++)
 	{
-		word[i] = '*'; //заполняем нулями массив
+		word[i] = '*';
 	}
 	word[i] = 0;
-	printf("%s", que);
+	printf("%s", question);
 	printf("%s", word);
 	printf("\n");
 	while (strchr(word, '*') != NULL)
 	{
-		for (n = 0; n < 3; n++)
+		struct Node* current;
+		for (current = players->first; current != NULL; current = current->next)
 		{
 			for (;;)
 			{
-				printf("Player №%d\n", n + 1);
+				int score = rand() % 1000 + 100;
+				printf("Player %s. Score %d!\n", current->player.name, score);
 				gets(s, 1);
 				w = s[0];
 				for (i = 0; i < count; i++)
 				{
-					if (ans[i] == w && word[i] != w)
+					if (answer[i] == w && word[i] != w)
 					{
 						word[i] = w;
-						a[n] += rand() % 1000 + 100;
+						current->player.score += score;
 						k = 1;
 					}
 				}
@@ -43,8 +46,7 @@ void game()
 					k = 0;
 					if (strchr(word, '*') == NULL)
 					{
-						win = a[n];
-						printf("The winner is player №%d\n", n + 1);
+						winner = &current->player;
 						break;
 					}
 				}
@@ -55,6 +57,13 @@ void game()
 				break;
 		}
 	}
-	printf("Congratulations!\n The right word was %s.", word);
+	printf("Congratulations!\n");
+	printf("The winner is %s with %d score!\n", winner->name, winner->score);
+	printf("The right word was %s.\n", word);
+	struct Node* current;
+	for (current = players->first; current != NULL; current = current->next)
+	{
+		printf("%s %d\n", current->player.name, current->player.score);
+	}
 	getchar();
 }
