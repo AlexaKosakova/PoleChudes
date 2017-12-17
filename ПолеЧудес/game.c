@@ -43,6 +43,7 @@ struct Player* game(const struct List* players, const char* question, const char
 				printf("%s\n", word);
 				if (k == 1)
 				{
+					printf("The wright letter!\n");
 					k = 0;
 					if (strchr(word, '*') == NULL)
 					{
@@ -51,6 +52,7 @@ struct Player* game(const struct List* players, const char* question, const char
 					}
 				}
 				else
+					printf("The wrong letter!\n");
 					break;
 			}
 			if (strchr(word, '*') == NULL)
