@@ -4,7 +4,7 @@
 
 #include "list.h"
 
-void game(const struct List* players, const char* question, const char* answer)
+struct Player* game(const struct List* players, const char* question, const char* answer)
 {
 	char word[100], s[2];
 	char w;
@@ -27,7 +27,7 @@ void game(const struct List* players, const char* question, const char* answer)
 		{
 			for (;;)
 			{
-				int score = rand() % 1000 + 100;
+				int score = (rand() % 10 + 1) * 100;
 				printf("Player %s. Score %d!\n", current->player.name, score);
 				gets(s, 1);
 				w = s[0];
@@ -60,10 +60,11 @@ void game(const struct List* players, const char* question, const char* answer)
 	printf("Congratulations!\n");
 	printf("The winner is %s with %d score!\n", winner->name, winner->score);
 	printf("The right word was %s.\n", word);
+
 	struct Node* current;
 	for (current = players->first; current != NULL; current = current->next)
 	{
 		printf("%s %d\n", current->player.name, current->player.score);
 	}
-	getchar();
+	return winner;
 }

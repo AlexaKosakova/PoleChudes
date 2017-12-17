@@ -1,1 +1,1 @@
-void game(const struct List* players, const char* question, const char* answer);
+struct Player* game(const struct List* players, const char* question, const char* answer);
