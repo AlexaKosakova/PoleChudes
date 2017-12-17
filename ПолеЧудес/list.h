@@ -1,6 +1,8 @@
+#include "player.h"
+
 struct Node
 {
-	int value;
+	struct Player player;
 	struct Node* next;
 };
 struct List
@@ -11,4 +13,4 @@ struct List
 
 struct List* createList();
 void destroyList(struct List* list);
-void add(struct List* list, int value);
+void addPlayer(struct List* list, const char* name);

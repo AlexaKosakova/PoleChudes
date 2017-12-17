@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "list.h"
 
@@ -22,10 +23,12 @@ void destroyList(struct List* list)
 	free(list);
 }
 
-void add(struct List* list, int value)
+void addPlayer(struct List* list, const char* name)
 {
 	struct Node* node = (struct Node*) malloc(sizeof(struct Node));
-	node->value = value;
+	node->player.name = (char*)malloc(sizeof(char)*strlen(name));
+	strcpy(node->player.name, name);
+	node->player.score = 0;
 	node->next = NULL;
 	if (list->last == NULL)
 	{
